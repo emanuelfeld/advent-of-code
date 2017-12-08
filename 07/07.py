@@ -9,7 +9,6 @@ class Node:
         self.children = []
         self.parent = None
         self.total_weight = None
-        self.branch_weight = None
 
     def add_children(self, nodes):
         self.children = nodes
@@ -17,11 +16,9 @@ class Node:
             node.parent = self
 
     def get_total_weight(self):
-        if self.children == []:
-            self.branch_weight = 0
-        elif self.branch_weight == None:
-            self.branch_weight = sum([node.get_total_weight() for node in self.children])
-        self.total_weight = self.weight + self.branch_weight
+        self.total_weight = self.weight + sum([
+            node.get_total_weight()
+            for node in self.children])
         return self.total_weight
 
 
