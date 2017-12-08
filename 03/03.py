@@ -24,27 +24,20 @@ def manhattan_distance(n):
         return (abs(offset - layer) + layer)
 
 
-def test_1():
-    assert manhattan_distance(1) == 0
-    assert manhattan_distance(12) == 3
-    assert manhattan_distance(23) == 2
-    assert manhattan_distance(1024) == 31
-    print('part 1 tests pass')
-
-
-test_1()
-
-print('steps from 277678 to the access port:', manhattan_distance(277678))
-
-
-# part 2
-
+# this is simpler and easier to extend to part 2:
 
 def positions():
-    x, y = 1, 0
-    layer = 1
+    x, y = 0, 0
+    layer = 0
+
+    yield (x, y)
 
     while True:
+        layer += 1
+        # print(layer)
+        while x < layer:
+            x += 1
+            yield (x, y)
         while y < layer:
             y += 1
             yield (x, y)
@@ -54,32 +47,55 @@ def positions():
         while y > -layer:
             y -= 1
             yield (x, y)
-        while x < layer + 1:
-            x += 1
-            yield (x, y)
-        layer += 1
+
+
+def part_1(n):
+    counter = 1
+    for (x, y) in positions():
+        if counter + 1 > n:
+            return abs(x) + abs(y)
+        counter += 1
+
+
+def test_1_1():
+    assert manhattan_distance(1) == 0
+    assert manhattan_distance(12) == 3
+    assert manhattan_distance(23) == 2
+    assert manhattan_distance(1024) == 31
+    print('part 1 - method 1 tests pass')
+
+
+def test_1_2():
+    assert part_1(1) == 0
+    assert part_1(12) == 3
+    assert part_1(23) == 2
+    assert part_1(1024) == 31
+    print('part 1 - method 2 tests pass')
+
+
+test_1_1()
+print('part 1 method 1 - steps from 277678 to the access port:', manhattan_distance(277678))
+
+test_1_2()
+print('part 2 method 2 - steps from 277678 to the access port:', part_1(277678))
+
+
+# part 2
 
 
 def part_2(input_value):
-    assignments = {
-        (0, 0): 1, 
-        (1, 0): 1
+    grid = {
+        (0, 0): 1
     }
 
-    def getter(x, y):
-        try:
-            return assignments[(x, y)]
-        except:
-            return 0
-
     for (x, y) in positions():
-        value = sum([getter(i, j) 
+        value = sum([grid.get((i, j), 0) 
             for i in range(x - 1, x + 2) 
             for j in range(y - 1, y + 2)])
         if value > input_value:
             return value
         else:
-            assignments[(x, y)] = value
+            grid[(x, y)] = value
 
 
-print(part_2(277678))
+print('part 2:', part_2(277678))
