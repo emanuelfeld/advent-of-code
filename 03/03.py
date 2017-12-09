@@ -1,6 +1,5 @@
 import math
 
-
 # part 1
 
 
@@ -24,7 +23,7 @@ def manhattan_distance(n):
         return (abs(offset - layer) + layer)
 
 
-# this is simpler and easier to extend to part 2:
+# this is easier to extend to part 2, but runs in O(n) instead of O(1)
 
 def positions():
     x, y = 0, 0
@@ -34,7 +33,6 @@ def positions():
 
     while True:
         layer += 1
-        # print(layer)
         while x < layer:
             x += 1
             yield (x, y)
