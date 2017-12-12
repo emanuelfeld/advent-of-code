@@ -30,8 +30,7 @@ def hex_position(moves):
         yield (x, y, z)
 
 
-positions = [pos for pos in hex_position(data)]
-displacements = [hex_displacement(*pos) for pos in positions]
+displacements = [hex_displacement(*pos) for pos in hex_position(data)]
 
 d_final = displacements[-1]
 d_max = max(displacements)
