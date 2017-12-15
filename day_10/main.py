@@ -1,9 +1,6 @@
 from functools import reduce
 
 
-instructions = "199,0,255,136,174,254,227,16,51,85,1,2,22,17,7,192"
-
-
 # part 1
 
 
@@ -20,13 +17,6 @@ def knot_hash(lengths, numbers):
         skip += 1
 
     return numbers
-
-
-lengths = [int(i) for i in instructions.split(',')]
-numbers = list(range(256))
-
-knot_hashed = knot_hash(lengths, numbers)
-print('part 1:', knot_hashed[0] * knot_hashed[1])
 
 
 # part 2
@@ -48,12 +38,21 @@ def dense_hash(inpt):
     return ''.join(result)
 
 
-lengths = [ord(char) for char in instructions] + [17, 31, 73, 47, 23]
-lengths = lengths * 64
-numbers = list(range(256))
+if __name__ == '__main__':
+    instructions = "199,0,255,136,174,254,227,16,51,85,1,2,22,17,7,192"
 
-knot_hashed = knot_hash(lengths, numbers)
-sparse_hashed = sparse_hash(knot_hashed)
-dense_hashed = dense_hash(sparse_hashed)
+    lengths = [int(i) for i in instructions.split(',')]
+    numbers = list(range(256))
 
-print('part 2:', dense_hashed)
+    knot_hashed = knot_hash(lengths, numbers)
+    print('part 1:', knot_hashed[0] * knot_hashed[1])
+
+    lengths = [ord(char) for char in instructions] + [17, 31, 73, 47, 23]
+    lengths = lengths * 64
+    numbers = list(range(256))
+
+    knot_hashed = knot_hash(lengths, numbers)
+    sparse_hashed = sparse_hash(knot_hashed)
+    dense_hashed = dense_hash(sparse_hashed)
+
+    print('part 2:', dense_hashed)
