@@ -10,7 +10,7 @@ with open('input.txt', 'r') as infile:
 
 y = 0
 for i in range(len(data[0])):
-    if data[0][i] != " ":
+    if data[0][i]:
         x = i
         break
 
